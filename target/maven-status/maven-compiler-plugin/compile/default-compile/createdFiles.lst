@@ -1,0 +1,5 @@
+com\allpago\mail\graph\ManageGraph.class
+com\allpago\mail\restservice\RestService.class
+com\allpago\mail\file\ManageFile.class
+com\allpago\mail\filter\CORSFilter.class
+com\allpago\mail\service\SearchService.class
