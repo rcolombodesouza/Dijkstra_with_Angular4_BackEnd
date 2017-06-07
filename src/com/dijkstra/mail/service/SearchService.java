@@ -1,10 +1,5 @@
 package com.dijkstra.mail.service;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Map;
-import org.json.JSONObject;
 import com.dijkstra.mail.factory.Factory;
 import com.dijkstra.mail.file.ManageFile;
 import com.dijkstra.mail.graph.ManageGraph;
@@ -13,6 +8,12 @@ import es.usc.citius.hipster.graph.GraphBuilder;
 import es.usc.citius.hipster.graph.GraphSearchProblem;
 import es.usc.citius.hipster.model.impl.WeightedNode;
 import es.usc.citius.hipster.model.problem.SearchProblem;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Map;
 
 
 /**

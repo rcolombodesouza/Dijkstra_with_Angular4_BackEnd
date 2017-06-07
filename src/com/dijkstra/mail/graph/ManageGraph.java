@@ -1,10 +1,10 @@
 package com.dijkstra.mail.graph;
 
-import java.text.DecimalFormat;
-import java.util.Map;
-
 import es.usc.citius.hipster.graph.GraphBuilder;
 import es.usc.citius.hipster.model.impl.WeightedNode;
+
+import java.text.DecimalFormat;
+import java.util.Map;
 
 /**
  * Class responsible to manage the creation of the graph and calculate the volumetric weight.

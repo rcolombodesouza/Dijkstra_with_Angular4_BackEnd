@@ -3,11 +3,12 @@ package com.dijkstra.mail.principal;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.stream.Stream;
+
 import static com.dijkstra.mail.service.SearchService.runDijkstraPost;
 import static java.nio.file.Files.walk;
 import static java.nio.file.Paths.get;
 
-public class Main {
+class Main {
 
 	public static void main(String[] args) {
 		

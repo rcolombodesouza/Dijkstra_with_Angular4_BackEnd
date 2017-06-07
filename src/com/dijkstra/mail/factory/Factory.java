@@ -1,11 +1,12 @@
 package com.dijkstra.mail.factory;
 
+import com.dijkstra.mail.controller.usercotroller.UserController;
+import org.bson.Document;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
-import org.bson.Document;
-import org.json.JSONObject;
-import com.dijkstra.mail.controller.usercotroller.UserController;
 
 
 public interface Factory {

@@ -1,22 +1,15 @@
 package com.dijkstra.mail.file;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
+import com.dijkstra.mail.factory.Factory;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.json.JSONObject;
 
-import com.dijkstra.mail.factory.Factory;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.Map;
 
 /**
  * Class responsible to read the csv file and insert the data into a map variable.

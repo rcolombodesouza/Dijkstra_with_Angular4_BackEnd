@@ -1,15 +1,15 @@
 package com.dijkstra.mail.restservice;
 
 
+import com.dijkstra.mail.controller.usercotroller.UserController;
+import com.dijkstra.mail.factory.Factory;
+import org.bson.Document;
+import org.json.JSONObject;
+
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import org.bson.Document;
-import org.json.JSONObject;
-
-import com.dijkstra.mail.controller.usercotroller.UserController;
-import com.dijkstra.mail.factory.Factory;
 
 
 @Path("/register")
