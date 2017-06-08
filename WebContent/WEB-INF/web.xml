@@ -16,11 +16,11 @@
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 		<init-param> 
          	<param-name>jersey.config.server.provider.packages</param-name> 
-        	<param-value>com.dijkstra.mail.restservice</param-value> 
+        	<param-value>com.dijkstra.mail.view</param-value>
         </init-param>
         <init-param>
         	<param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
-        	<param-value>com.dijkstra.mail.filter.CORSFilter</param-value>
+        	<param-value>com.dijkstra.mail.useful.filter.CORSFilter</param-value>
       	</init-param> 
 		<load-on-startup>1</load-on-startup>
 	</servlet>

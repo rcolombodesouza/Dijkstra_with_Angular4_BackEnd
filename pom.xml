@@ -24,25 +24,19 @@
       </plugin>
     </plugins>   
   </build>
-  <dependencyManagement>
-  	<dependencies>
-    	<dependency>
-        	<groupId>org.mongodb</groupId>
-        	<artifactId>mongodb-driver</artifactId>
-        	<version>3.4.2</version>
-    	</dependency>
+    	<dependencies>
 
-	  	<dependency>
+		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-mongodb</artifactId>
-			<version>1.10.3.RELEASE</version>
+			<version>1.7.2.RELEASE</version>
 		</dependency>
 
-	  	<dependency>
-			<groupId>org.springframework.boot</groupId>
-		  	<artifactId>spring-boot-autoconfigure</artifactId>
-		  	<version>1.5.2.RELEASE</version>
-	  	</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>bson</artifactId>
+			<version>3.4.2</version>
+		</dependency>
 
 		<dependency>
 			<groupId>asm</groupId>
@@ -97,7 +91,7 @@
 		</dependency>
 
   </dependencies>
-	</dependencyManagement>
+
 
   
 </project>

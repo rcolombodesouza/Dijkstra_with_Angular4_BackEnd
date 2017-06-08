@@ -7,20 +7,19 @@
           <element id="module-output" name="MailBackEnd" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: org.mongodb:mongodb-driver:3.4.2" />
+          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-mongodb:1.7.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.0.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:4.0.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.0.9.RELEASE" />
+          <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.0.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:4.0.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.0.9.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-commons:1.10.2.RELEASE" />
+          <element id="library" level="project" name="Maven: org.mongodb:mongo-java-driver:2.13.0" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.12" />
+          <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.12" />
           <element id="library" level="project" name="Maven: org.mongodb:bson:3.4.2" />
-          <element id="library" level="project" name="Maven: org.mongodb:mongodb-driver-core:3.4.2" />
-          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-mongodb:1.10.3.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.3.8.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-context:4.3.8.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.3.8.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.3.8.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-core:4.3.8.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.3.8.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-commons:1.13.3.RELEASE" />
-          <element id="library" level="project" name="Maven: org.mongodb:mongo-java-driver:2.14.3" />
-          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.24" />
-          <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.24" />
           <element id="library" level="project" name="Maven: asm:asm:3.3.1" />
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-bundle:1.19" />
           <element id="library" level="project" name="Maven: javax.ws.rs:jsr311-api:1.1.1" />
@@ -39,8 +38,6 @@
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-jaxrs:1.1.1" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-csv:1.4" />
           <element id="library" level="project" name="Maven: es.usc.citius.hipster:hipster-core:1.0.1" />
-          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-autoconfigure:1.5.2.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot:1.5.2.RELEASE" />
         </element>
       </element>
       <element id="directory" name="META-INF">
