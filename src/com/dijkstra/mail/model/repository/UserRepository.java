@@ -32,8 +32,16 @@ public class UserRepository {
     }
 
     public String registerUser(User user){
-        mongoOperation.save(user);
-        logger.info("User {} registered with success", user);
+
+        User userCheck = this.searchUser(user.getUserName(), user.getPassword());
+
+        if(userCheck != null){
+            logger.info("User {} already exists", userCheck);
+            return "NOK";
+        } else {
+            mongoOperation.save(user);
+            logger.info("User {} registered with success", user);
+        }
         return "OK";
     }
 

@@ -1,6 +1,5 @@
 package com.dijkstra.mail.view;
 
-
 import com.dijkstra.mail.controller.user.UserController;
 import com.dijkstra.mail.useful.factory.Factory;
 import org.bson.Document;
