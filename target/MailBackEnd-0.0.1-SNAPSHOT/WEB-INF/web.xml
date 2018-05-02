@@ -12,20 +12,20 @@
  
   
   <servlet>
-		<servlet-name>Jersey Web Application</servlet-name>
-		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-		<init-param> 
-         	<param-name>jersey.config.server.provider.packages</param-name> 
-        	<param-value>com.allpago.mail.restservice</param-value> 
+        <servlet-name>Jersey Web Application</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+        <init-param> 
+             <param-name>jersey.config.server.provider.packages</param-name> 
+            <param-value>com.dijkstra.mail.view</param-value>
         </init-param>
         <init-param>
-        	<param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
-        	<param-value>com.allpago.mail.filter.CORSFilter</param-value>
-      	</init-param> 
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Jersey Web Application</servlet-name>
-		<url-pattern>/service/*</url-pattern>
-	</servlet-mapping>
+            <param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
+            <param-value>com.dijkstra.mail.useful.filter.CORSFilter</param-value>
+          </init-param> 
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Jersey Web Application</servlet-name>
+        <url-pattern>/service/*</url-pattern>
+    </servlet-mapping>
 </web-app>

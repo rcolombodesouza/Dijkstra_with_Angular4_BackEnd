@@ -1,5 +1,12 @@
-com\allpago\mail\graph\ManageGraph.class
-com\allpago\mail\restservice\RestService.class
-com\allpago\mail\file\ManageFile.class
-com\allpago\mail\filter\CORSFilter.class
-com\allpago\mail\service\SearchService.class
+com\dijkstra\mail\controller\graph\ManageGraph.class
+com\dijkstra\mail\view\UserRegister.class
+com\dijkstra\mail\controller\user\UserController.class
+com\dijkstra\mail\model\entity\User.class
+com\dijkstra\mail\test\Main.class
+com\dijkstra\mail\controller\SearchService.class
+com\dijkstra\mail\view\RestService.class
+com\dijkstra\mail\useful\filter\CORSFilter.class
+com\dijkstra\mail\model\mongoconfig\SpringMongoConfig.class
+com\dijkstra\mail\model\repository\UserRepository.class
+com\dijkstra\mail\useful\factory\Factory.class
+com\dijkstra\mail\controller\graph\ManageFile.class

@@ -14,11 +14,11 @@ public class User {
     private String lastName;
 
 
-    public User(String _firstName, String _lastName, String _userName, String _password){
-        this.setFirstName(_firstName);
-        this.setLastName(_lastName);
-        this.setPassword(_password);
-        this.setUserName(_userName);
+    public User(String firstName, String lastName, String userName, String password){
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setPassword(password);
+        this.setUserName(userName);
     }
 
     public User(){
@@ -27,7 +27,8 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("User[id='%s', firstName='%s', lastName='%s', userName='%s']", id, firstName, lastName, userName);
+        return String.format("User[id='%s', firstName='%s', lastName='%s', userName='%s']", id, firstName, lastName,
+                userName);
     }
 
     public String getId() {
@@ -37,8 +38,6 @@ public class User {
     public void setId(String id) {
         this.id = id;
     }
-
-
 
     public String getFirstName() {
         return firstName;
