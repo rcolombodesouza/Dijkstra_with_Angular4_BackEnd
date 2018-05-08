@@ -38,7 +38,6 @@ public class ManageFile {
             List<List<String>> listOfLines = stream.map(lines -> Arrays.asList(lines.split(",")))
                     .collect(Collectors.toList());
             listOfLines.forEach(line -> iterateCSVLines(line, upperMailNetwork));
-
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
@@ -62,17 +61,19 @@ public class ManageFile {
         //Desconsider the lines starting with the @ and lines starting with numbers
         //Iterates the line starting from the first possible receiver
         if(! line.get(0).startsWith ( "@" ) && ! line.get ( 0 ).matches ( "^[0-9]")) {
-            for (int i = 1; i < line.size(); i++) {
-
-                //Splits the receiver String separating the receiver and the Hard to send a package to
-                //him/her and inserts it into the innerMap.
-                String[] item = line.get(i).split(":");
-
-                upperMailNetwork.computeIfAbsent(upperKey, node -> simpleHash.get()).put(item[0], item[1]);
-            }
+            line.stream().skip(1).forEach(lineItem ->
+            //Splits the receiver String separating the receiver and the Hard to send a package to
+            //him/her and inserts it into the innerMap.
+            addToUpperMailNetwork(upperMailNetwork, upperKey, lineItem.substring(0, lineItem.indexOf(':')),
+                    lineItem.substring(lineItem.indexOf(':') + 1)));
         } else {
             //Considering that @ is the sender equals to ME, than it inserts the receiver and the package volume size.
-            upperMailNetwork.computeIfAbsent(upperKey, node -> simpleHash.get()).put(line.get(1), line.get(2));
+            addToUpperMailNetwork(upperMailNetwork, upperKey, line.get(1), line.get(2));
         }
+    }
+
+    private static void addToUpperMailNetwork(Map<String, Map<String, String>> upperMailNetwork, String upperKey,
+            String object1, String object2) {
+        upperMailNetwork.computeIfAbsent(upperKey, node -> simpleHash.get()).put(object1, object2);
     }
 }

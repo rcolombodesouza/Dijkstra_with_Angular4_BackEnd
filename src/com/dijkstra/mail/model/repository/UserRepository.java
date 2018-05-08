@@ -1,8 +1,6 @@
 package com.dijkstra.mail.model.repository;
 
 
-import com.dijkstra.mail.model.entity.User;
-import com.dijkstra.mail.model.mongoconfig.SpringMongoConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -11,6 +9,9 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
+
+import com.dijkstra.mail.model.entity.User;
+import com.dijkstra.mail.model.mongoconfig.SpringMongoConfig;
 
 
 
@@ -36,11 +37,9 @@ public class UserRepository {
         if(userCheck != null){
             logger.info("User {} already exists", userCheck);
             return "NOK";
-        } else {
-            mongoOperation.save(user);
-            logger.info("User {} registered with success", user);
         }
+        mongoOperation.save(user);
+        logger.info("User {} registered with success", user);
         return "OK";
     }
-
 }

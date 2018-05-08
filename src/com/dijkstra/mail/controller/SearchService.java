@@ -82,45 +82,40 @@ public class SearchService {
      */
     private static void iterateSearchesPost(Map.Entry<String, String> pathIterator, SearchProblem<Integer,
             String, WeightedNode<Integer, String, Double>> p, JSONObject object, Path filePath){
-
-        Map<String, String> map = simpleHash.get();
+        String msg = "";
+        Map<String, String> map;
 
         //Gets node`s best way from ME to destiny (pathIterator.getKey())
         WeightedNode<Integer, String, Double> node = Hipster.createDijkstra(p)
                 .search(pathIterator.getKey()).getGoalNode();
 
         if(pathIterator.getKey().equalsIgnoreCase(node.state())) {
-
             //Calculate the cost and formats it with 2 decimal places.
             String finalCost = ManageGraph.calculateCost(node, pathIterator);
-
-            if(object == null){
-                LOGGER.log(Level.INFO, "The cost to send a package to {0} is {1} Euros.",
-                        new Object[] {node.state(), finalCost});
-            } else {
-                if(filePath != null){
-                    map.put("file", filePath.toString().substring(filePath.toString().lastIndexOf('\\') + 1));
-                }
-                map.put("source", "ME");
-                map.put("target", node.state());
-                map.put("cost",finalCost);
-            }
+            msg = "The cost to send a package to {0} is {1} Euros.";
+            map = updateMap(object, node, filePath, finalCost, msg, new Object[] {node.state(), finalCost});
         } else {
-            if(object == null){
-                LOGGER.log(Level.INFO, "There cost to send a package to {0} is infinity.",
-                        new Object[] {pathIterator.getKey()});
-            } else {
-                if(filePath != null){
-                    map.put("file", filePath.toString().substring(filePath.toString().lastIndexOf('\\') + 1));
-                }
-
-                map.put("source", "ME");
-                map.put("target", pathIterator.getKey());
-                map.put("cost","~");
-            }
+            msg = "There cost to send a package to {0} is infinity.";
+            map = updateMap(object, node, filePath, "~", msg, new Object[] {pathIterator.getKey()});
         }
         if(object != null){
             object.append("result", map);
         }
+    }
+
+    private static Map<String, String> updateMap(JSONObject object, WeightedNode<Integer, String, Double> node,
+            Path filePath, String finalCost, String msg, Object[] msgObject) {
+        Map<String, String> map = simpleHash.get();
+        if(object == null){
+            LOGGER.log(Level.INFO, msg, msgObject);
+        } else {
+            if(filePath != null){
+                map.put("file", filePath.toString().substring(filePath.toString().lastIndexOf('\\') + 1));
+            }
+            map.put("source", "ME");
+            map.put("target", node.state());
+            map.put("cost",finalCost);
+        }
+        return map;
     }
 }
