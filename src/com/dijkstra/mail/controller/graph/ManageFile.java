@@ -1,6 +1,9 @@
 package com.dijkstra.mail.controller.graph;
 
 import static com.dijkstra.mail.useful.factory.Factory.simpleHash;
+import static java.util.logging.Level.SEVERE;
+import static com.dijkstra.mail.useful.constants.Constants.PROBLEM_STARTING_POINT;
+import static com.dijkstra.mail.useful.constants.Constants.NUMBER_REGEX;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,7 +11,6 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -25,6 +27,7 @@ public class ManageFile {
 
     private ManageFile() {}
 
+    
     /**
      * Process the file chosen and returns a map with the values.
      * @param filePath
@@ -33,18 +36,15 @@ public class ManageFile {
      */
     public static Map<String, Map<String, String>> processInput(String filePath,
             Map<String, Map<String, String>> upperMailNetwork) throws IOException {
-
         try (Stream<String> stream =  Files.lines(Paths.get(filePath))){
             List<List<String>> listOfLines = stream.map(lines -> Arrays.asList(lines.split(",")))
                     .collect(Collectors.toList());
             listOfLines.forEach(line -> iterateCSVLines(line, upperMailNetwork));
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            LOGGER.log(SEVERE, e.getMessage(), e);
         }
-
         //Returns the map with all required informations to create the graph and calculate the best way to the destiny.
         return upperMailNetwork;
-
     }
 
 
@@ -54,13 +54,11 @@ public class ManageFile {
      * @param upperMailNetwork
      */
     private static void iterateCSVLines(List<String> line, Map<String, Map<String, String>> upperMailNetwork){
-
         //Get the sender
         String upperKey = line.get(0);
-
         //Desconsider the lines starting with the @ and lines starting with numbers
         //Iterates the line starting from the first possible receiver
-        if(! line.get(0).startsWith ( "@" ) && ! line.get ( 0 ).matches ( "^[0-9]")) {
+        if(!line.get(0).startsWith (PROBLEM_STARTING_POINT) && !line.get(0).matches(NUMBER_REGEX)) {
             line.stream().skip(1).forEach(lineItem ->
             //Splits the receiver String separating the receiver and the Hard to send a package to
             //him/her and inserts it into the innerMap.

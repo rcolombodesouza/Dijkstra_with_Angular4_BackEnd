@@ -2,13 +2,25 @@ package com.dijkstra.mail.controller;
 
 import static com.dijkstra.mail.useful.factory.Factory.complexHash;
 import static com.dijkstra.mail.useful.factory.Factory.simpleHash;
+import static com.dijkstra.mail.useful.constants.Constants.FILE_FORMAT;
+import static com.dijkstra.mail.useful.constants.Constants.FIRST_ELEMENT;
+import static com.dijkstra.mail.useful.constants.Constants.MESSAGE;
+import static com.dijkstra.mail.useful.constants.Constants.FILE;
+import static com.dijkstra.mail.useful.constants.Constants.RESULT;
+import static com.dijkstra.mail.useful.constants.Constants.TARGET;
+import static com.dijkstra.mail.useful.constants.Constants.COST;
+import static com.dijkstra.mail.useful.constants.Constants.SOURCE;
+import static com.dijkstra.mail.useful.constants.Constants.INFINITY_MESSAGE;
+import static com.dijkstra.mail.useful.constants.Constants.INFINITY_SIMBOL;
+import static com.dijkstra.mail.useful.constants.Constants.PROBLEM_STARTING_POINT;
+
+import static java.util.logging.Level.SEVERE;
+import static java.util.logging.Level.INFO;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.json.JSONObject;
 
 import com.dijkstra.mail.controller.graph.ManageFile;
@@ -28,9 +40,10 @@ import es.usc.citius.hipster.model.problem.SearchProblem;
 public class SearchService {
 
     private static final Logger LOGGER = Logger.getLogger(SearchService.class.getName());
-
+        
     private SearchService() {}
 
+    
     /**
      * Receives the filePath and object from the frontEnd, verify if it`s a csv file and runs the search.
      * @param filePath
@@ -38,15 +51,15 @@ public class SearchService {
      */
     public static void runDijkstraPost(Path filePath, JSONObject fileContent, JSONObject object){
         try {
-            /* Verify if the files are regular and ends with .csv */
-            if (filePath.toFile().isFile() &&  filePath.toString().endsWith(".csv")) {
+            /* Verify if the files are regular and ends with .CSV */
+            if (filePath.toFile().isFile() &&  filePath.toString().endsWith(FILE_FORMAT)) {
                 Map<String, Map<String, String>> mailNetwork = complexHash.get();
                 mailNetwork.putAll(fileContent != null ? ManageFile.processInput(null, complexHash.get())
                         : ManageFile.processInput(filePath.toString(), complexHash.get()));
                 generateGraph(mailNetwork, object, filePath);
             }
         } catch (IOException | NullPointerException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            LOGGER.log(SEVERE, e.getMessage(), e);
         }
     }
 
@@ -62,17 +75,16 @@ public class SearchService {
         GraphBuilder<String,Integer> graph = ManageGraph.generateGraph(mailNetwork);
 
         // Read only the lines starting with @
-        Map<String, String> innerPathNetwork = mailNetwork.get("@");
+        Map<String, String> innerPathNetwork = mailNetwork.get(PROBLEM_STARTING_POINT);
 
         //Since @ is equal to ME, creates the SearchProblem from Hipster4j
-        SearchProblem<Integer, String, WeightedNode<Integer, String, Double>> p = GraphSearchProblem
-                .startingFrom("ME").in(graph.createDirectedGraph()).takeCostsFromEdges().build();
+        SearchProblem<Integer, String, WeightedNode<Integer, String, Double>> searchProblem = GraphSearchProblem
+                .startingFrom(FIRST_ELEMENT).in(graph.createDirectedGraph()).takeCostsFromEdges().build();
 
         //Iterate all the lines starting with @ to get the best way for each one of them.
-        innerPathNetwork.entrySet().forEach(pathIterator -> iterateSearchesPost(pathIterator, p, object, filePath));
-
+        innerPathNetwork.entrySet().forEach(pathIterator -> iterateSearchesPost(pathIterator, searchProblem, object,
+        		filePath));
     }
-
 
 
     /**
@@ -82,7 +94,6 @@ public class SearchService {
      */
     private static void iterateSearchesPost(Map.Entry<String, String> pathIterator, SearchProblem<Integer,
             String, WeightedNode<Integer, String, Double>> p, JSONObject object, Path filePath){
-        String msg = "";
         Map<String, String> map;
 
         //Gets node`s best way from ME to destiny (pathIterator.getKey())
@@ -92,29 +103,39 @@ public class SearchService {
         if(pathIterator.getKey().equalsIgnoreCase(node.state())) {
             //Calculate the cost and formats it with 2 decimal places.
             String finalCost = ManageGraph.calculateCost(node, pathIterator);
-            msg = "The cost to send a package to {0} is {1} Euros.";
-            map = updateMap(object, node, filePath, finalCost, msg, new Object[] {node.state(), finalCost});
+            map = updateMap(object, node, filePath, finalCost, MESSAGE, new Object[] {node.state(), finalCost});
         } else {
-            msg = "There cost to send a package to {0} is infinity.";
-            map = updateMap(object, node, filePath, "~", msg, new Object[] {pathIterator.getKey()});
+            map = updateMap(object, node, filePath, INFINITY_SIMBOL, INFINITY_MESSAGE, 
+            		new Object[] {pathIterator.getKey()});
         }
         if(object != null){
-            object.append("result", map);
+            object.append(RESULT, map);
         }
     }
 
+    
+    /**
+     * Update the map according to object
+     * @param object to be used for update
+     * @param node target state
+     * @param filePath represent the .CSV file path
+     * @param finalCost cost from source to target
+     * @param msg to be shown
+     * @param msgObject parameters to be imported into the message
+     * @return the updated map
+     */
     private static Map<String, String> updateMap(JSONObject object, WeightedNode<Integer, String, Double> node,
             Path filePath, String finalCost, String msg, Object[] msgObject) {
         Map<String, String> map = simpleHash.get();
         if(object == null){
-            LOGGER.log(Level.INFO, msg, msgObject);
+            LOGGER.log(INFO, msg, msgObject);
         } else {
             if(filePath != null){
-                map.put("file", filePath.toString().substring(filePath.toString().lastIndexOf('\\') + 1));
+                map.put(FILE, filePath.toString().substring(filePath.toString().lastIndexOf('\\') + 1));
             }
-            map.put("source", "ME");
-            map.put("target", node.state());
-            map.put("cost",finalCost);
+            map.put(SOURCE, FIRST_ELEMENT);
+            map.put(TARGET, node.state());
+            map.put(COST,finalCost);
         }
         return map;
     }

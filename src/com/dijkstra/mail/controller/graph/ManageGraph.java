@@ -1,5 +1,8 @@
 package com.dijkstra.mail.controller.graph;
 
+import static com.dijkstra.mail.useful.constants.Constants.PROBLEM_STARTING_POINT;
+import static com.dijkstra.mail.useful.constants.Constants.CSV_RECORD;
+
 import java.text.DecimalFormat;
 import java.util.Map;
 
@@ -9,7 +12,7 @@ import es.usc.citius.hipster.model.impl.WeightedNode;
 /**
  * Class responsible to manage the creation of the graph and calculate the volumetric weight.
  * Technologies used are Hipster4j. It was necessary to customize the return when there is no way to the destiny.
- * This techonology is responsible to create the graph and find the best way to the destiny.
+ * This technology is responsible to create the graph and find the best way to the destiny.
  * @author rafael.colombo
  *
  */
@@ -19,24 +22,20 @@ public class ManageGraph {
 
     }
 
+    
     /**
      * Returns the graph created based on the map passed as a parameter
      * @param mailNetwork
      * @return the graph created.
      */
     public static GraphBuilder<String,Integer> generateGraph(Map<String, Map<String, String>> mailNetwork){
-
         //Creates a GraphBuilder object from Hipster4j
         GraphBuilder<String,Integer> graph = GraphBuilder.create();
-
         //Iterates the Map to populate the graph
         mailNetwork.entrySet().forEach(entry -> mountGraph(entry, graph));
-
         //return the graph created
         return graph;
     }
-
-
 
 
     /**
@@ -45,22 +44,16 @@ public class ManageGraph {
      * @param graph
      */
     private static void mountGraph(Map.Entry<String, Map<String,String>> entry, GraphBuilder<String,Integer> graph){
-
         //Grab the first object at the specific line
         String from = entry.getKey();
-
         //Verify if the object doesn`t start with @
-        if(!from.startsWith("CSVRecord") && !from.startsWith("@")){
-
+        if(!from.startsWith(CSV_RECORD) && !from.startsWith(PROBLEM_STARTING_POINT)){
             //Gets the sub Hashmap
             Map<String, String> subMap = entry.getValue();
-
             //Iterates the sub Hashmap
             subMap.entrySet().forEach(subEntry -> iterateSubMap(subEntry, graph, from));
-
         }
     }
-
 
 
     /**
@@ -77,6 +70,7 @@ public class ManageGraph {
         graph.connect(from).to(to).withEdge(hard);
     }
 
+    
     /**
      * Calculate the volumetric weight based on params
      * @param length
@@ -87,14 +81,11 @@ public class ManageGraph {
     private static Double calcVolumetricWeight(double length, double width, double height){
         int weightDivisor = 5000;
         Double roundFactor = 0.5;
-
         Double originalVolume = length * width * height;
-
         return roundFactor * Math.ceil(originalVolume / weightDivisor / roundFactor);
-
-
     }
 
+    
     /**
      * Responsible for calculate the final cost based on the last node.
      * @param node
@@ -103,19 +94,14 @@ public class ManageGraph {
      */
     public static String calculateCost(WeightedNode<Integer, String, Double> node,
             Map.Entry<String, String> pathIterator){
-
         //Gets the dimension of the package
         String[] packageDimension = pathIterator.getValue().split("x");
-
         //Gets the volumetric weight
         double roundFactor = ManageGraph.calcVolumetricWeight(Double.parseDouble(packageDimension[0]),
                 Double.parseDouble(packageDimension[1]), Double.parseDouble(packageDimension[2]));
-
         //Gets hard sqrt
         double sqrtHard = Math.sqrt(node.getCost());
-
         //Calculate the cost and formats it with 2 decimal places.
         return new DecimalFormat("#.00").format(sqrtHard * roundFactor);
     }
-
 }

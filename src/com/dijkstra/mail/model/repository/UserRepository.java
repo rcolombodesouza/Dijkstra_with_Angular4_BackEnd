@@ -1,8 +1,10 @@
 package com.dijkstra.mail.model.repository;
 
+import static com.dijkstra.mail.useful.constants.Constants.USERNAME;
+import static com.dijkstra.mail.useful.constants.Constants.PASS;
+import static java.util.logging.Level.INFO;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -18,15 +20,15 @@ import com.dijkstra.mail.model.mongoconfig.SpringMongoConfig;
 @Repository
 public class UserRepository {
 
-    ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringMongoConfig.class);
-    MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
-    static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
+    private ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringMongoConfig.class);
+    private MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
+    private static final Logger LOGGER = Logger.getLogger(UserRepository.class.getName());
 
     public User searchUser(String userName, String password){
         Query query = new Query();
-        query.addCriteria(Criteria.where("userName").is(userName).and("password").is(password));
+        query.addCriteria(Criteria.where(USERNAME).is(userName).and(PASS).is(password));
         User result = mongoOperation.findOne(query, User.class);
-        logger.info("User {} found ", result);
+        LOGGER.log(INFO, "User {} found ", result);
         return result;
     }
 
@@ -35,11 +37,11 @@ public class UserRepository {
         User userCheck = this.searchUser(user.getUserName(), user.getPassword());
 
         if(userCheck != null){
-            logger.info("User {} already exists", userCheck);
+        	LOGGER.log(INFO, "User {} already exists", userCheck);
             return "NOK";
         }
         mongoOperation.save(user);
-        logger.info("User {} registered with success", user);
+        LOGGER.log(INFO, "User {} registered with success", user);
         return "OK";
     }
 }

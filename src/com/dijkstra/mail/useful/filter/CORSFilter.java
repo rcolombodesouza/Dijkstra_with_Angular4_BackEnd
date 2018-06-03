@@ -1,7 +1,7 @@
 package com.dijkstra.mail.useful.filter;
 
 import java.io.IOException;
-import java.util.logging.Level;
+import static java.util.logging.Level.INFO;
 import java.util.logging.Logger;
 
 import javax.servlet.Filter;
@@ -34,7 +34,7 @@ public class CORSFilter implements Filter {
             throws IOException, ServletException {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        LOGGER.log(Level.INFO, "CORSFilter HTTP Request: {0}", new Object[] {request.getMethod()});
+        LOGGER.log(INFO, "CORSFilter HTTP Request: {}", new Object[] {request.getMethod()});
 
         // Authorize (allow) all domains to consume the content
         ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "*");

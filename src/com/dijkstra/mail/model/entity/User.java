@@ -3,6 +3,11 @@ package com.dijkstra.mail.model.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Map to MongoDB related to the user collection
+ * @author Rafael
+ *
+ */
 @Document(collection="user")
 public class User {
 
@@ -42,7 +47,11 @@ public class User {
     public String getFirstName() {
         return firstName;
     }
-
+    
+    private void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    
     public String getLastName() {
         return lastName;
     }
@@ -65,9 +74,5 @@ public class User {
 
     private void setPassword(String password) {
         this.password = password;
-    }
-
-    private void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 }
